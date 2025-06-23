@@ -1,7 +1,7 @@
-import express, { Request, Response } from "express";
+import express, { Router, Request, Response } from "express";
 import { Book } from "../models/book.models";
 
-export const booksRouter = express.Router();
+export const booksRouter = Router();
 
 booksRouter.post("/", async (req: Request, res: Response) => {
   const body = req.body;
@@ -33,7 +33,8 @@ booksRouter.get("/", async (req: Request, res: Response) => {
     let booksQuery = Book.find(query);
 
     if (sortBy && sortOrder) {
-      booksQuery = booksQuery.sort({ [sortBy]: sortOrder });
+      const sortValue = sortOrder.toLowerCase() === "asc" ? 1 : -1;
+      booksQuery = booksQuery.sort({ [sortBy]: sortValue });
     }
 
     const books = await booksQuery.limit(limit);
