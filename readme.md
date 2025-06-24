@@ -25,6 +25,8 @@ A professional RESTful API for managing books and borrow records in a library, b
 
 You can try the API live here:  
 **[https://library-management-l2a3.vercel.app/](https://library-management-l2a3.vercel.app/)**
+Video Overview:  
+**[Link](https://www.youtube.com/watch?v=HmCzqbsp0w0)**
 
 ---
 

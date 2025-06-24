@@ -51,7 +51,7 @@ exports.booksRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, fun
         });
     }
     catch (error) {
-        res.status(400).json({
+        res.status(404).json({
             success: false,
             message: error.message,
             error: error,
@@ -62,17 +62,26 @@ exports.booksRouter.get("/:bookId", (req, res) => __awaiter(void 0, void 0, void
     try {
         const id = req.params.bookId;
         const books = yield book_models_1.Book.findById(id);
-        res.status(200).json({
-            success: true,
-            message: "Books retrieved successfully",
-            data: books,
-        });
+        if (!books) {
+            res.status(404).json({
+                success: false,
+                message: "Book not found",
+                data: null,
+            });
+        }
+        else {
+            res.status(200).json({
+                success: true,
+                message: "Books retrieved successfully",
+                data: books,
+            });
+        }
     }
     catch (error) {
-        res.status(400).json({
+        res.status(404).json({
             success: false,
             message: error.message,
-            error: error,
+            errors: error,
         });
     }
 }));
@@ -88,7 +97,7 @@ exports.booksRouter.patch("/:bookId", (req, res) => __awaiter(void 0, void 0, vo
         });
     }
     catch (error) {
-        res.status(400).json({
+        res.status(404).json({
             success: false,
             message: error.message,
             error: error,
@@ -106,7 +115,7 @@ exports.booksRouter.delete("/:bookId", (req, res) => __awaiter(void 0, void 0, v
         });
     }
     catch (error) {
-        res.status(400).json({
+        res.status(404).json({
             success: false,
             message: error.message,
             error: error,

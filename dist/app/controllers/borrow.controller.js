@@ -14,45 +14,6 @@ const express_1 = require("express");
 const book_models_1 = require("../models/book.models");
 const borrow_models_1 = require("../models/borrow.models");
 exports.borrowRouter = (0, express_1.Router)();
-// borrowRouter.post("/", async (req: Request, res: Response)=> {
-//   const { book, quantity, dueDate } = req.body;
-//   try {
-//     const bookData = await Book.findById(book);
-//     // book ta pawa na gele
-//     if (!bookData) {
-//        res.status(404).json({
-//         success: false,
-//         message: "Book not found",
-//       });
-//     }
-//     // book er enough copy na thakle
-//     if (bookData.copies < quantity) {
-//        res.status(400).json({
-//         success: false,
-//         message: "Not enough copies available",
-//       });
-//     }
-//     bookData.copies -= quantity;
-//     bookData.updateAvailability();
-//     await bookData.save();
-//     const borrowRecord = await Borrow.create({
-//       book,
-//       quantity,
-//       dueDate,
-//     });
-//      res.status(201).json({
-//       success: true,
-//       message: "Book borrowed successfully",
-//       data: borrowRecord,
-//     });
-//   } catch (error: any) {
-//     res.status(402).json({
-//       success: false,
-//       message: error.message,
-//       errors: error,
-//     });
-//   }
-// });
 exports.borrowRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { book, quantity, dueDate } = req.body;
     try {
@@ -86,7 +47,7 @@ exports.borrowRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, f
         }
     }
     catch (error) {
-        res.status(500).json({
+        res.status(401).json({
             success: false,
             message: error.message,
             errors: error,
@@ -132,7 +93,7 @@ exports.borrowRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, fu
         });
     }
     catch (error) {
-        res.status(400).json({
+        res.status(404).json({
             success: false,
             message: error.message,
             errors: error,
