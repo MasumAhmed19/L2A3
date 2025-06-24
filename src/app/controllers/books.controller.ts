@@ -45,7 +45,7 @@ booksRouter.get("/", async (req: Request, res: Response) => {
       data: books,
     });
   } catch (error: any) {
-    res.status(400).json({
+    res.status(404).json({
       success: false,
       message: error.message,
       error: error,
@@ -58,16 +58,25 @@ booksRouter.get("/:bookId", async (req: Request, res: Response) => {
     const id = req.params.bookId;
     const books = await Book.findById(id);
 
-    res.status(200).json({
-      success: true,
-      message: "Books retrieved successfully",
-      data: books,
-    });
+    if (!books) {
+       res.status(404).json({
+        success: false,
+        message: "Book not found",
+        data: null,
+      });
+    }else{
+      res.status(200).json({
+        success: true,
+        message: "Books retrieved successfully",
+        data: books,
+      });
+    }
+
   } catch (error: any) {
-    res.status(400).json({
+    res.status(404).json({
       success: false,
       message: error.message,
-      error: error,
+      errors: error,
     });
   }
 });
@@ -84,7 +93,7 @@ booksRouter.patch("/:bookId", async (req: Request, res: Response) => {
       data: books,
     });
   } catch (error: any) {
-    res.status(400).json({
+    res.status(404).json({
       success: false,
       message: error.message,
       error: error,
@@ -103,7 +112,7 @@ booksRouter.delete("/:bookId", async (req: Request, res: Response) => {
       data: null,
     });
   } catch (error: any) {
-    res.status(400).json({
+    res.status(404).json({
       success: false,
       message: error.message,
       error: error,
